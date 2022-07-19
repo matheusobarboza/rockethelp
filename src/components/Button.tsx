@@ -3,7 +3,7 @@ import { Loading } from "./Loading";
 
 interface ButtonProps extends IButtonProps {
   title: string;
-  loading: true | false
+  loading?: true | false
 }
 
 export function Button({ title, loading, ...rest }: ButtonProps) {
