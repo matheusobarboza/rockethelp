@@ -1,16 +1,10 @@
 import { useNavigation } from "@react-navigation/native";
 import {
-  HStack,
-  IconButton,
-  VStack,
-  useTheme,
-  Heading,
-  Text,
-  FlatList,
-  Center
+  Center, FlatList, Heading, HStack,
+  IconButton, Text, useTheme, VStack
 } from "native-base";
 import { ChatTeardropText, SignOut } from "phosphor-react-native";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Logo from "../assets/logo_secondary.svg";
 import { Button } from "../components/Button";
 import { Filter } from "../components/Filter";
@@ -27,7 +21,56 @@ export function Home() {
       when: '18/07/2022 às 10:00',
       status: 'open'
     },
+    {
+      id: '12345',
+      patrimony: '202200',
+      when: '19/07/2022 às 19:00',
+      status: 'closed'
+    },
+    {
+      id: '122345',
+      patrimony: '2022003232',
+      when: '19/07/2022 às 20:00',
+      status: 'closed'
+    },
+    {
+      id: '2815',
+      patrimony: '2815',
+      when: '19/07/2022 às 20:00',
+      status: 'open'
+    },
+    {
+      id: '2816',
+      patrimony: '2816',
+      when: '19/07/2022 às 20:00',
+      status: 'open'
+    },
   ]);
+  const [list, setList] = useState<OrderProps[]>(orders)
+
+  useEffect(() => {
+    if(statusSelected === 'open'){
+      setList(
+        orders.filter(item => {
+          if(item.status === 'open'){
+            return true;
+          } else {
+            return false;
+          }
+        })
+      )
+    } else {
+      setList(
+        orders.filter(item => {
+          if(item.status === 'closed') {
+            return true;
+          } else {
+            return false;
+          }
+        })
+      )
+    }
+  }, [statusSelected])
 
   const navigation = useNavigation();
   const { colors } = useTheme();
@@ -66,7 +109,7 @@ export function Home() {
         >
           <Heading color="gray.100">Solicitações</Heading>
 
-          <Text color="gray.200">{ orders.length }</Text>
+          <Text color="gray.200">{ list.length }</Text>
         </HStack>
 
         <HStack space={3} mb={8}>
@@ -86,7 +129,7 @@ export function Home() {
         </HStack>
 
         <FlatList 
-          data={orders}
+          data={list}
           keyExtractor={item => item.id}
           renderItem={({ item }) => <Order data={item} onPress={() => handleOpenDetails(item.id)} />}
           showsVerticalScrollIndicator={false}

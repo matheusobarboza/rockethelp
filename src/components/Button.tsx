@@ -1,5 +1,4 @@
 import { Button as NativeBaseButton, Heading, IButtonProps } from "native-base";
-import { Loading } from "./Loading";
 
 interface ButtonProps extends IButtonProps {
   title: string;
@@ -17,7 +16,7 @@ export function Button({ title, loading, ...rest }: ButtonProps) {
       {...rest}
     >
       <Heading color="white" fontSize="sm">
-        {loading ? <Loading bg="green.700" /> : title}
+        { title } 
       </Heading>
     </NativeBaseButton>
   );
